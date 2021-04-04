@@ -46,7 +46,7 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
-      return { user, token };
+      return { user: user as IUser, token };
     } catch (e) {
       this.logger.error(e);
       throw e;
@@ -68,7 +68,7 @@ export default class AuthService {
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
       Reflect.deleteProperty(user, 'salt');
-      return { user, token };
+      return { user: user as IUser, token };
     } else {
       throw new Error('Invalid Password');
     }
