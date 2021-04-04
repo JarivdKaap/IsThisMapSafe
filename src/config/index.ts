@@ -6,7 +6,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const envFound = dotenv.config();
 if (envFound.error) {
-  throw new Error('🔥 Environment file not found');
+  //throw new Error('🔥 Environment file not found');
 }
 
 export default {
