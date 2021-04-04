@@ -27,8 +27,7 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use(config.api.prefix, routes());
 
-  app.use(express.static('client-dist'))
-
+  app.use(express.static("./src/client-dist"));
 
   app.use((req, res, next) => {
     const err = new Error('Not Found');

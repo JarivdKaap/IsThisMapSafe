@@ -16,8 +16,6 @@ async function startServer() {
   const server = app.listen(config.port, () => {
     Logger.info(`✔  Recipe Service started at port ${config.port}`);
   });
-  console.log(Date.now());
-  
 }
 
 startServer();
