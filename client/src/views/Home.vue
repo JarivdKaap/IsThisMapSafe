@@ -1,23 +1,17 @@
 <template>
   <div class="home">
-    <b-container>
-      <b-card>
-        <h1>Is this map safe?</h1>
-      </b-card>
+    <b-form-input v-model.lazy="search" type="search" placeholder="Search..."></b-form-input>
 
-      <b-form-input v-model.lazy="search" type="search" placeholder="Search..."></b-form-input>
+    <b-row>
+      <b-col cols="12" md="6" xl="4" v-for="mapStatus in mapStatusesFiltered" :key="mapStatus._id">
+        <map-status-card :map-status="mapStatus" />
+      </b-col>
+    </b-row>
 
-      <b-row>
-        <b-col cols="12" md="6" xl="4" v-for="mapStatus in mapStatusesFiltered" :key="mapStatus._id">
-          <map-status-card :map-status="mapStatus" />
-        </b-col>
-      </b-row>
-
-      <infinite-loading v-if="!search" @infinite="infiniteHandler">
-        <div slot="no-more"></div>
-        <div slot="no-results"></div>
-      </infinite-loading>
-    </b-container>
+    <infinite-loading v-if="!search" @infinite="infiniteHandler">
+      <div slot="no-more"></div>
+      <div slot="no-results"></div>
+    </infinite-loading>
   </div>
 </template>
 

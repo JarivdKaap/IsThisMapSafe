@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 import { celebrate, Joi } from 'celebrate';
 import logger from '../../loaders/logger';
-import MapStatusService from '../../services/mapstatus';
+import MapStatusService from '../../services/MapStatusService';
 
 const route = Router();
 

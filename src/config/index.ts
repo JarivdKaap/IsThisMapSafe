@@ -17,7 +17,6 @@ export default {
   },
   databaseURL: process.env.DATABASE_URL,
   steamApiKey: process.env.STEAM_API_KEY,
-  api: {
-    prefix: '/api',
-  },
+  steamCmdInstallFolder: process.env.STEAMCMD_INSTALL_FOLDER,
+  validatorExePath: process.env.VALIDATOR_EXE_PATH,
 };

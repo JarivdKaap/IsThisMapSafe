@@ -19,6 +19,7 @@ const MapStatusSchema = new Schema({
   },
 
   imageUrl: String,
+  notes: String,
 
   mapSecureStatus: {
     type: String,
@@ -38,6 +39,7 @@ interface IMapStatusSchema extends Document {
   imageUrl: string;
   mapSecureStatus: MapSecureStatus;
   statusChangedDate: Date;
+  notes: string;
 }
 
 // Virtuals and methods

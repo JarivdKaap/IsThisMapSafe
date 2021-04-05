@@ -5,17 +5,20 @@ import MapSecureStatus from '../models/MapSecureStatus';
 import { IMapStatusModel, IMapStatus } from '../models/MapStatus';
 import SteamApi from 'steam-api-ts'
 import config from '../config';
+import MapValidatorService from './MapValidatorService';
 
 @Service()
 export default class MapStatusService {
   private mapStatusModel: IMapStatusModel;
   private logger: winston.Logger;
-  private steamApi : SteamApi
-
-  constructor() {
+  private steamApi : SteamApi;
+  
+  constructor(
+    private mapValidator: MapValidatorService
+  ) {
     this.mapStatusModel = Container.get('mapStatusModel');
     this.logger = Container.get('logger');
-    this.steamApi = new SteamApi(config.steamApiKey)
+    this.steamApi = new SteamApi(config.steamApiKey);
   }
 
   public async getMapStatuses(query): Promise<IMapStatus[]> {
@@ -63,8 +66,10 @@ export default class MapStatusService {
       creatorName: creatorData[0].personaname,
       steamid,
       imageUrl: workshopData.preview_url,
-      mapSecureStatus: MapSecureStatus.Validating,
+      mapSecureStatus: MapSecureStatus.ValidatorQueue,
     })
+
+    this.mapValidator.validateMap(mapStatus);
 
     return mapStatus
   }

@@ -25,7 +25,7 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use(bodyParser.json());
 
-  app.use(config.api.prefix, routes());
+  app.use('/api', routes());
 
   app.use(express.static("./src/client-dist"));
 

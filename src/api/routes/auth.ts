@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
-import AuthService from '../../services/auth';
+import AuthService from '../../services/AuthService';
 import { IUserInputDTO } from '../../models/User';
 import { celebrate, Joi } from 'celebrate';
 import logger from '../../loaders/logger';
