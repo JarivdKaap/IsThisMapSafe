@@ -16,6 +16,7 @@ export default {
     level: process.env.LOG_LEVEL || 'silly',
   },
   databaseURL: process.env.DATABASE_URL,
+  steamApiKey: process.env.STEAM_API_KEY,
   api: {
     prefix: '/api',
   },

@@ -1,5 +1,6 @@
 
 enum MapSecureStatus {
+  Validating,
   Safe,
   Warning,
   Alert

@@ -23,4 +23,34 @@ export default (app: Router) => {
       }
     }
   )
+
+  route.get(
+    '/:id',
+    async (req: Request, res: Response, next: NextFunction) => {
+      logger.debug('Calling get mapstatus with id: %d', req.params.id);
+      try {
+        const mapStatusServiceInstance = Container.get(MapStatusService);
+        const mapstatus = await mapStatusServiceInstance.getMapStatusBySteamId(req.params.id);
+        return res.status(201).json(mapstatus);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    }
+  )
+
+  route.post(
+    '/:id',
+    async (req: Request, res: Response, next: NextFunction) => {
+      logger.debug('Calling request mapstatus with id: %d', req.params.id);
+      try {
+        const mapStatusServiceInstance = Container.get(MapStatusService);
+        const mapstatus = await mapStatusServiceInstance.createMapStatusRequest(req.params.id);
+        return res.status(201).json(mapstatus);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    }
+  )
 }

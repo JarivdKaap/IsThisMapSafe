@@ -22,10 +22,14 @@ const MapStatusSchema = new Schema({
 
   mapSecureStatus: {
     type: String,
-    enum: MapSecureStatus
+    enum: MapSecureStatus,
+    default: MapSecureStatus.Validating,
   },
   statusChangedDate: Date
 });
+
+// Full text search index
+MapStatusSchema.index({name: 'text', creatorName: 'text', steamid: 'text'});
 
 interface IMapStatusSchema extends Document {
   name: string;
