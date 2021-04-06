@@ -24,12 +24,13 @@ export default class MapStatusService {
   public async getMapStatuses(query): Promise<IMapStatus[]> {
     let dbQuery;
     if (query.search) {
-      dbQuery = this.mapStatusModel.find({$text: {$search: query.search}})
+      dbQuery = this.mapStatusModel.find({ $or : [{ name: { $regex: query.search, $options: "i" } }, { creatorName: { $regex: query.search, $options: "i" } }]})
     } else {
       dbQuery = this.mapStatusModel.find()
     }
     dbQuery
       .limit(20)
+      //.explain(true)
       .sort( '-statusChangedDate' );
     
     if (query.page) {
@@ -48,7 +49,7 @@ export default class MapStatusService {
   public async createMapStatusRequest(steamid): Promise<IMapStatus> {
     const mapStatusExists = await this.getMapStatusBySteamId(steamid)
     if (mapStatusExists != null)
-      throw new StatusError(400, "Map is already requested")
+      throw new StatusError(400, "Map is already requested.")
 
     const workshopData = await this.steamApi.getPublishedFileDetails(steamid)
 
@@ -67,6 +68,7 @@ export default class MapStatusService {
       steamid,
       imageUrl: workshopData.preview_url,
       mapSecureStatus: MapSecureStatus.ValidatorQueue,
+      statusChangedDate: Date.now(),
     })
 
     this.mapValidator.validateMap(mapStatus);

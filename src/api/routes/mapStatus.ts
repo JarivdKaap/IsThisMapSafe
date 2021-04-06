@@ -16,7 +16,7 @@ export default (app: Router) => {
       try {
         const mapStatusServiceInstance = Container.get(MapStatusService);
         const mapstatuses = await mapStatusServiceInstance.getMapStatuses(req.query);
-        return res.status(201).json(mapstatuses);
+        return res.status(200).json(mapstatuses);
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);
@@ -31,7 +31,7 @@ export default (app: Router) => {
       try {
         const mapStatusServiceInstance = Container.get(MapStatusService);
         const mapstatus = await mapStatusServiceInstance.getMapStatusBySteamId(req.params.id);
-        return res.status(201).json(mapstatus);
+        return res.status(200).json(mapstatus);
       } catch (e) {
         logger.error('🔥 error: %o', e);
         return next(e);

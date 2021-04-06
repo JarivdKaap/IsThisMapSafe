@@ -8,7 +8,7 @@
         />
     </b-card-group>
     
-    <infinite-loading @infinite="infiniteHandler">
+    <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
       <div slot="no-more"></div>
       <div slot="no-results"></div>
     </infinite-loading>

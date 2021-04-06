@@ -29,9 +29,6 @@ const MapStatusSchema = new Schema({
   statusChangedDate: Date
 });
 
-// Full text search index
-MapStatusSchema.index({name: 'text', creatorName: 'text', steamid: 'text'});
-
 interface IMapStatusSchema extends Document {
   name: string;
   creatorName: string;

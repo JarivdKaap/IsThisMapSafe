@@ -30,25 +30,26 @@
          </b-row>
        </div>
          <b-navbar-nav  class="align-items-lg-center ml-lg-auto">
-           <b-nav-item to="/">
-               <i class="ni ni-planet"></i>
+           <b-nav-item exact to="/">
+               <i class="fa fa-home"></i>
                <span class="nav-link-inner--text">Home</span>
            </b-nav-item>
            <b-nav-item to="/request">
-               <i class="ni ni-circle-08"></i>
+               <i class="fa fa-envelope"></i>
                <span class="nav-link-inner--text">Request</span>
            </b-nav-item>
-           <b-nav-item to="/login">
-               <i class="ni ni-key-25"></i>
+           <b-nav-item to="/faq">
+               <i class="fa fa-question"></i>
                <span class="nav-link-inner--text">FAQ</span>
            </b-nav-item>
            <b-form class="navbar-search form-inline mr-sm-3 navbar-search-light light"
+            role="form" @submit.prevent="onSearchSubmit"
             id="navbar-search-main">
             <b-form-group class="mb-0">
               <b-input-group class="input-group-alternative input-group-merge">
-                <b-form-input placeholder="Search" type="text"> </b-form-input>
+                <b-form-input placeholder="Search" v-model="search" type="text"> </b-form-input>
 
-                <div class="input-group-append">
+                <div class="input-group-append" @click="onSearchSubmit">
                   <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
               </b-input-group>
@@ -107,6 +108,7 @@
     },
     data() {
       return {
+        search: '',
         showMenu: false,
         menuTransitionDuration: 250,
         pageTransitionDuration: 200,
@@ -140,6 +142,11 @@
         } else {
           this.removeBackgroundColor()
         }
+      },
+      onSearchSubmit() {
+        if (this.$route.name == 'search' && this.$route.params.value === this.search)
+          return;
+        this.$router.push({ name: 'search', params: { value: this.search }})
       }
     },
     beforeDestroy() {

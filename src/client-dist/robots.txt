@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /request
+Allow: /faq
+#
+Disallow: /img/
+Disallow: /fonts/

@@ -6,6 +6,7 @@ function resolveSrc(_path) {
 // vue.config.js
 module.exports = {
   lintOnSave: true,
+  outputDir: '../src/client-dist',
   configureWebpack: {
     // Set up all the aliases we use in our app.
     resolve: {
