@@ -34,7 +34,6 @@ const routes = [
         name: 'register',
         component: () => import('../views/Pages/Register.vue')
       },
-      //{ path: '*', component: () => import('@/views/NotFoundPage.vue') }
     ]
   },
   {

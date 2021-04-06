@@ -42,7 +42,7 @@
                <i class="fa fa-question"></i>
                <span class="nav-link-inner--text">FAQ</span>
            </b-nav-item>
-           <b-form class="navbar-search form-inline mr-sm-3 navbar-search-light light"
+           <b-form class="navbar-search form-inline mr-sm-3 navbar-search-dark"
             role="form" @submit.prevent="onSearchSubmit"
             id="navbar-search-main">
             <b-form-group class="mb-0">
@@ -75,16 +75,6 @@
             <div class="copyright text-center text-xl-left text-muted">
               © {{year}} <a href="https://www.jarivdkaap.com" class="font-weight-bold ml-1" target="_blank">Jari van der Kaap</a>
             </div>
-          </b-col>
-          <b-col xl="6" class="col-xl-6">
-            <b-nav  class="nav-footer justify-content-center justify-content-xl-end">
-              <b-nav-item href="https://www.jarivdkaap.com" target="_blank" >
-                Jari van der Kaap
-              </b-nav-item>
-              <b-nav-item href="https://www.creative-tim.com/presentation" target="_blank" >
-                About Us
-              </b-nav-item>
-            </b-nav>
           </b-col>
         </b-row>
       </b-container>
