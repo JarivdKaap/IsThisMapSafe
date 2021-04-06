@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     loadPage(state) {
-      MapStatusService.getMapStatusesPage(this.page)
+      MapStatusService.getMapStatusesPage(this.page, true)
         .then((data) => {
           if (data.length) {
             this.page++;

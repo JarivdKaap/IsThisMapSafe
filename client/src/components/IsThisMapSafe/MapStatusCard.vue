@@ -6,7 +6,7 @@
       tag="article"
       class="mb-2"
     >
-      <b-row align-h="between">
+      <b-row align-h="between" class="mx-1">
         <b-card-title>{{mapStatus.name}}</b-card-title>
         <div class="icon icon-shape text-white rounded-circle shadow"
               :class="[`bg-${iconColor}`]"

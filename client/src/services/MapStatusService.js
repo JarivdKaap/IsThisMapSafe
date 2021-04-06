@@ -6,8 +6,8 @@ export default {
       return response.data;
     });
   },
-  async getMapStatusesPage(page) {
-    return await axios.get(`/api/mapstatus?page=${page}`).then((response) => {
+  async getMapStatusesPage(page, validated = true) {
+    return await axios.get(`/api/mapstatus?page=${page}&validated=${validated}`).then((response) => {
       return response.data;
     });
   },

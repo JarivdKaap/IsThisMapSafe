@@ -28,6 +28,10 @@ export default class MapStatusService {
     } else {
       dbQuery = this.mapStatusModel.find()
     }
+
+    if (query.validated === "true")
+      dbQuery.where('mapSecureStatus').in([MapSecureStatus.Safe, MapSecureStatus.Warning, MapSecureStatus.Alert])
+
     dbQuery
       .limit(20)
       //.explain(true)
