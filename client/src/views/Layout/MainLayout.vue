@@ -5,7 +5,7 @@
       :transparent="true"
       menu-classes="justify-content-end"
       class="navbar-horizontal navbar-main navbar-top navbar-dark"
-      expand="lg"
+      expand="md"
     >
       <div slot="brand" class="navbar-wrapper">
         <b-navbar-brand to="/">
@@ -30,19 +30,32 @@
          </b-row>
        </div>
          <b-navbar-nav  class="align-items-lg-center ml-lg-auto">
-           <b-nav-item exact to="/">
+           <b-nav-item class="pt-md-2 pt-lg-0" exact to="/">
                <i class="fa fa-home"></i>
                <span class="nav-link-inner--text">Home</span>
            </b-nav-item>
-           <b-nav-item to="/request">
+           <b-nav-item class="pt-md-2 pt-lg-0" to="/request">
                <i class="fa fa-envelope"></i>
                <span class="nav-link-inner--text">Request</span>
            </b-nav-item>
-           <b-nav-item to="/faq">
+           <b-nav-item class="pt-md-2 pt-lg-0" to="/faq">
                <i class="fa fa-question"></i>
                <span class="nav-link-inner--text">FAQ</span>
-           </b-nav-item>
-           <b-form class="navbar-search form-inline mr-sm-3 navbar-search-dark"
+          </b-nav-item>
+          <b-form class="navbar-search form-inline mr-sm-3 navbar-search-dark d-none d-sm-none d-md-block"
+            role="form" @submit.prevent="onSearchSubmit"
+            id="navbar-search-main">
+            <b-form-group class="mb-0">
+              <b-input-group class="input-group-alternative input-group-merge">
+                <b-form-input placeholder="Search" v-model="search" type="text"> </b-form-input>
+
+                <div class="input-group-append" @click="onSearchSubmit">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+              </b-input-group>
+            </b-form-group>
+          </b-form>
+          <b-form class="navbar-search form-inline mr-sm-3 navbar-search-light d-block d-sm-block d-md-none mt-2"
             role="form" @submit.prevent="onSearchSubmit"
             id="navbar-search-main">
             <b-form-group class="mb-0">

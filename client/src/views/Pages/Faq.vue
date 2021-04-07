@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
+    <div class="header bg-gradient-info py-7 py-lg-8 pt-lg-9">
       <b-container class="pt--8">
         <b-jumbotron
           text-variant="white"
@@ -33,7 +33,7 @@
 
     <b-container class="mt--8 pb-5">
       <b-row >
-        <b-col md="5" lg="3">
+        <b-col md="5" lg="3" class="pt-3 pt-sm-3">
           <b-card>
             <h2>Table of Content</h2>
             <ul class="mt-4">
@@ -49,7 +49,7 @@
             </ul>
           </b-card>
         </b-col>
-        <b-col>
+        <b-col class="pt-3 pt-sm-3">
           <b-card>
             <div role="tablist" class="accordion">
               <b-card no-body class="mb-1"

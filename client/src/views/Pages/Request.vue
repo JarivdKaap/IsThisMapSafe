@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Header -->
-    <div class="header bg-gradient-success py-5 py-lg-6 pt-lg-7">
+    <div class="header bg-gradient-warning py-5 py-lg-6 pt-lg-7">
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
-            <b-col xl="6" lg="7" md="8" class="px-4">
+            <b-col xl="6" lg="7" md="8" class="px-4 pt-md-5 pt-lg-0">
               <h1 class="text-white">Request A Map!</h1>
               <p class="text-lead text-white">There's a big chance you are looking for an item we don't have in our database. Give the URL and we'll add it to the queue.</p>
             </b-col>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <b-container class="mt--6 pb-5">
+    <b-container class="mt--8 pb-5">
       <b-row class="justify-content-center">
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
