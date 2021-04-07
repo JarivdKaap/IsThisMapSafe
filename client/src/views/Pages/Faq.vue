@@ -104,6 +104,12 @@ export default {
           ans: "There is an exploit in Black Ops III where a workshop item is able to access the filesystem, start programs, use the shell, etc. This site analyzes the files for workshop items for malisious code which can harm your computer."
         },
         {
+          id: 8,
+          categoryId: 2,
+          question: 'How long does it take to analyze a workshop item?',
+          ans: "We only analyze 1 item at the time so this depends on how long the queue is. For the item to be downloaded and analyzed it takes roughly 2 minutes."
+        },
+        {
           id: 2,
           categoryId: 2,
           question: 'How does this work?',

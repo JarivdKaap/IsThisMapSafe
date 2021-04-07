@@ -24,7 +24,7 @@ const routes = [
         name: 'faq',
         component: () => import('../views/Pages/Faq.vue')
       },
-      {
+      /*{
         path: '/login',
         name: 'login',
         component: () => import('../views/Pages/Login.vue')
@@ -33,10 +33,10 @@ const routes = [
         path: '/register',
         name: 'register',
         component: () => import('../views/Pages/Register.vue')
-      },
+      },*/
     ]
   },
-  {
+  /*{
     path: '',
     component: () => import('../views/Layout/DashboardLayout.vue'),
     children: [
@@ -69,7 +69,7 @@ const routes = [
         component: () => import('../views/RegularTables.vue')
       }
     ]
-  },
+  },*/
   {
     path: '',
     redirect: 'main',
