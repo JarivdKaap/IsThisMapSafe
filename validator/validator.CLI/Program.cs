@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Autofac;
+using Newtonsoft.Json;
 using validator.Library;
 
 namespace validator.CLI
 {
     class Program
     {
-        static int Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
-            if (args.Length != 1 || !Directory.Exists(args[0]))
+            if (args.Length != 3 || !Directory.Exists(args[0]))
             {
                 return 0;
             }
@@ -19,9 +24,16 @@ namespace validator.CLI
             builder.RegisterType<Validator>().As<IValidator>().SingleInstance();
             var container = builder.Build();
             
-            StatusCode statusCode = container.Resolve<IValidator>().Validate(args[0]);
+            Tuple<StatusCode, AlertMessage[]> validatorResult = container.Resolve<IValidator>().Validate(args[0]);
 
-            return (int) statusCode;
+            if (validatorResult.Item2.Length > 0)
+            {
+                HttpClient client = new HttpClient() { BaseAddress = new Uri($"http://localhost:{args[2]}")};
+                var content = new StringContent(JsonConvert.SerializeObject(new { messages = validatorResult.Item2}), Encoding.UTF8, "application/json");
+                await client.PostAsync($"/api/mapstatus/messages/{args[1]}", content);
+            }
+            
+            return (int) validatorResult.Item1;
         }
     }
 }

@@ -35,20 +35,20 @@ namespace FastScanner
         /// <summary>
         /// Registered processors we can use for file-specific analysis
         /// </summary>
-        internal static Dictionary<string, Func<byte[], StatusCode>> FileProcessors = new Dictionary<string, Func<byte[], StatusCode>>
+        internal static Dictionary<string, Func<string, byte[], StatusCode>> FileProcessors = new Dictionary<string, Func<string, byte[], StatusCode>>
         {
-            { ".lua", fileData =>
+            { ".lua", (string fileName, byte[] fileData) =>
             {
                 //LuaFile.Analyse(fileName, fileData);
-                return StatusCode.Dangerous;
+                return StatusCode.Safe;
             } },
-            { ".gsc", fileData =>
+            { ".gsc", (string fileName, byte[] fileData) =>
             {
-                return ScriptFile.Analyse(fileData);
+                return ScriptFile.Analyse(fileData, fileName);
             } },
-            { ".csc", fileData =>
+            { ".csc", (string fileName, byte[] fileData) =>
             {
-                return ScriptFile.Analyse(fileData);
+                return ScriptFile.Analyse(fileData, fileName);
             } },
         };
 
@@ -98,11 +98,11 @@ namespace FastScanner
                         {
                             var extension = Path.GetExtension(name);
 
-                            foreach(KeyValuePair<string, Func<byte[], StatusCode>> processor in FileProcessors)
+                            foreach(KeyValuePair<string, Func<string, byte[], StatusCode>> processor in FileProcessors)
                             {
                                 if( extension == processor.Key)
                                 {
-                                    StatusCode newLevel = processor.Value.Invoke(reader.ReadBytes((int)size));
+                                    StatusCode newLevel = processor.Value.Invoke(name, reader.ReadBytes((int)size));
                                     if (newLevel > level)
                                         level = newLevel;
                                     break;

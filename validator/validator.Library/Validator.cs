@@ -1,17 +1,30 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FastScanner;
+using validator.Library.Utility;
 
 namespace validator.Library
 {
     public class Validator : IValidator
     {
         /// <summary>
+        /// List to store amber warnings
+        /// </summary>
+        public static List<string> AmberWarnings = new List<string>();
+
+        /// <summary>
+        /// List to store red alerts
+        /// </summary>
+        public static List<string> RedWarnings = new List<string>();
+        
+        /// <summary>
         /// Analyzes a folder with Black Ops III zone files 
         /// </summary>
         /// <param name="folderPath"></param>
         /// <returns></returns>
-        public StatusCode Validate(string folderPath)
+        public Tuple<StatusCode, AlertMessage[]> Validate(string folderPath)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -34,9 +47,16 @@ namespace validator.Library
                     if (code > statusLevel)
                         statusLevel = code;
                 }
+                
+                // Delete the decoded file
+                File.Delete(fastFile + ".output");
             }
 
-            return statusLevel;
+            AlertMessage[] messages = AmberWarnings
+                .Distinct().Select(w => new AlertMessage() { messsageStatus = MessageStatus.Warning, message = w})
+                .Concat(RedWarnings.Distinct().Select(w => new AlertMessage() { messsageStatus = MessageStatus.Warning, message = w}).ToList()).ToArray();
+            
+            return new Tuple<StatusCode, AlertMessage[]>(statusLevel, messages);
         }
     }
 }

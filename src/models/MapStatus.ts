@@ -1,5 +1,6 @@
 import { Document, Model, model, Types, Schema, Query } from 'mongoose';
 import MapSecureStatus from './MapSecureStatus';
+import MessageStatus from './MessageStatus';
 
 const MapStatusSchema = new Schema({
   name: {
@@ -26,7 +27,25 @@ const MapStatusSchema = new Schema({
     enum: MapSecureStatus,
     default: MapSecureStatus.Validating,
   },
-  statusChangedDate: Date
+
+  statusMessages: [
+    {
+      status: {
+        type: String,
+        enum: MessageStatus,
+        required: true,
+        default: MessageStatus.Safe,
+      },
+      message: {
+        type: String,
+        required: true,
+      }
+    }
+  ],
+
+  statusChangedDate: Date,
+  validationHash: String,
+  modNotes: String,
 });
 
 interface IMapStatusSchema extends Document {
@@ -36,7 +55,12 @@ interface IMapStatusSchema extends Document {
   imageUrl: string;
   mapSecureStatus: MapSecureStatus;
   statusChangedDate: Date;
-  notes: string;
+  statusMessages: {
+    status: MessageStatus,
+    message: string,
+  }[],
+  validationHash: string,
+  modNotes: string,
 }
 
 // Virtuals and methods

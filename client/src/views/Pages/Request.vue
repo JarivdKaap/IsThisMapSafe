@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     getSteamIdFromUrl() {
-      if (!this.steamUrl.includes('steamcommunity.com/sharedfiles/filedetails/?') || !this.steamUrl.includes('id=')) {
+      if (!this.steamUrl.includes('/filedetails/') || !this.steamUrl.includes('id=')) {
         return null;
       }
 

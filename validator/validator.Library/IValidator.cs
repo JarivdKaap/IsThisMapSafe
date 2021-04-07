@@ -1,7 +1,9 @@
+using System;
+
 namespace validator.Library
 {
     public interface IValidator
     {
-        StatusCode Validate(string folderPath);
+        Tuple<StatusCode, AlertMessage[]> Validate(string folderPath);
     }
 }

@@ -147,7 +147,7 @@
         }
       },
       onSearchSubmit() {
-        if (this.$route.name == 'search' && this.$route.params.value === this.search)
+        if (this.$route.name == 'search' && this.$route.params.value === this.search || !this.search)
           return;
         this.$router.push({ name: 'search', params: { value: this.search }})
       }

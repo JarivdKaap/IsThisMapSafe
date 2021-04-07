@@ -76,7 +76,7 @@ namespace FastScanner
         /// <summary>
         /// Analyses given byte code from a Lua file.
         /// </summary>
-        internal static StatusCode Analyse(byte[] fileData)
+        internal static StatusCode Analyse(byte[] fileData, string fileName)
         {
             // This is a fairly basic method of reading through all the integer hashes of a *SC file to check for function calls, but it should be adequate for finding functions
             // GSC aligns its hashes so we can do this...
@@ -96,7 +96,7 @@ namespace FastScanner
 
                     if (stringHash == value)
                     {
-                        //Program.AmberWarnings.Add("Function " + amberFunction.Key + " Found in: " + fileName + " : " + amberFunction.Value);
+                        Validator.AmberWarnings.Add("Function " + amberFunction.Key + " Found in: " + fileName + " : " + amberFunction.Value);
                         level = StatusCode.Warning;
                         break;
                     }
@@ -108,7 +108,7 @@ namespace FastScanner
 
                     if (stringHash == value)
                     {
-                        //Program.RedWarnings.Add("Function " + redFunction.Key + " Found in: " + fileName + " : " + redFunction.Value);
+                        Validator.RedWarnings.Add("Function " + redFunction.Key + " Found in: " + fileName + " : " + redFunction.Value);
                         level = StatusCode.Dangerous;
                         break;
                     }
