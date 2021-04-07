@@ -119,10 +119,22 @@ export default {
           id: 4,
           categoryId: 2,
           question: 'Where can I find the source-code to this site?',
-          ans: "You can find the source code on github <a href='https://github.com/JarivdKaap/IsThisMapSafe' target='_blank'>Here</a>"
+          ans: "You can find the source code on github <a href='https://github.com/JarivdKaap/IsThisMapSafe' target='_blank'>Here</a>."
         },
         {
           id: 5,
+          categoryId: 2,
+          question: 'Can I run this analyzer on my own computer?',
+          ans: "Yes, you can find this on Blakintosh's github <a href='https://github.com/Blakintosh/FastScanner' target='_blank'>Here</a>."
+        },
+        {
+          id: 6,
+          categoryId: 2,
+          question: 'Can I 100% trust these results?',
+          ans: "No, we do our best to make this as watertight as possible but as always there might still be some issues. If you find something malicious, please contact us so we can see manually review this. <br><b>We are not liable for any damages because of a false negative.</b>"
+        },
+        {
+          id: 7,
           categoryId: 3,
           question: 'Privacy Policy',
           ans: '<h3>Privacy Policy for IsThisMapSafe</h3>At IsThisMapSafe, one of our priorities is the privacy of our visitors.<br><br>This Privacy Policy document contains types of information that is collected and recorded by IsThisMapSafe and how we use it.<br><br>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.<br><h3>General Data Protection Regulation (GDPR)</h3>We are a Data Controller of your information.<br><br>If you are a resident of the European Economic Area (EEA), you have certain data protection rights.<br>If you wish to be informed what Personal Information we hold about you and if you want it to be removed from our systems, please contact us.<br><br>In certain circumstances, you have the following data protection rights:<ul><li>The right to access, update or to delete the information we have on you.</li><li>The right of rectification.</li><li>The right to object.</li><li>The right of restriction.</li><li>The right to data portability</li><li>The right to withdraw consent</li></ul><br><h3>Log Files</h3>IsThisMapSafe follows a standard procedure of using log files. These files log visitors when they visit websites.<br><br>The information collected by log files include:<ul><li>Internet protocol (IP) addresses</li><li>Browser type</li><li>Internet Service Provider (ISP)</li><li>Date and time stamp</li><li>Referring/exit pages</li><li>Items requested</li></ul>These are not linked to any information that is personally identifiable.<br><br>The purpose of the information is for analyzing trends, administering the site and preventing abuse.<br><br><h3>Our Advertising Partners</h3>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on IsThisMapSafe, which are sent directly to users\' browser.<br><br>They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.<br><br><h4>California Consumer Privacy Act (“CCPA”)</h4>Under CCPA, Californian residents have the right to declare their preferences on the sale of data for advertising and marketing purposes. If you wish to change your preferences, click this link to launch our preference portal:<br><br>Note that IsThisMapSafe has no access to or control over these cookies that are used by third-party advertisers.<br><br>We use a third-party to provide monetisation technologies for our site. You can review their privacy and cookie policy here.<br><br><h3>Third Party Privacy Policies</h3>IsThisMapSafe\'s Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.<br><br>You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers\' respective websites.<br><h3>Consent</h3>By using our website, you hereby consent to our Privacy Policy and agree to its terms.'
