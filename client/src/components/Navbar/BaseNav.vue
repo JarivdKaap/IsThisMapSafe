@@ -23,15 +23,14 @@
         @click.stop="toggleMenu">
       </b-navbar-toggle>
 
-      <b-collapse
-        is-nav
+      <div
+        class="collapse navbar-collapse"
+        :class="{ show: show }"
         id="nav-text-collapse"
-        class="navbar-custom-collapse collapse"
-        :class="menuClasses"
-        :visible="show"
-        v-click-outside="closeMenu">
+        v-click-outside="closeMenu"
+      >
         <slot :close-menu="closeMenu"></slot>
-      </b-collapse>
+      </div>
     </div>
   </b-navbar>
 </template>

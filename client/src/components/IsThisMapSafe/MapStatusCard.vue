@@ -32,17 +32,17 @@
           </b-alert>
         </div>
       </b-modal>
-      <div class="card-body">
+      <div class="card-body mt--3">
         <b-card-title>{{mapStatus.name}}</b-card-title>
-        <b-card-text>
+        <b-card-text class="mt--3">
           By <b>{{mapStatus.creatorName}}</b><br>
           <div v-if="isValidated">
             Validated on {{formattedDate}}
           </div>
         </b-card-text>
       </div>
-      <div class="card-footer">
-        <b-button variant="primary" :href="steamPageUrl" target="_blank">Visit Steam page</b-button>
+      <div class="card-footer mt--4">
+        <b-button class="my--2" variant="primary" :href="steamPageUrl" target="_blank">Visit Steam page</b-button>
       </div>
     </div>
   </div>

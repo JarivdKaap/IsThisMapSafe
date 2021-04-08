@@ -47,6 +47,7 @@ export default class MapStatusService {
 
   public async getMapStatusBySteamId(steamid): Promise<IMapStatus> {
     return await this.mapStatusModel.findOne({ steamid })
+      .select('-validationHash')
   }
 
   public async createMapStatusRequest(steamid): Promise<IMapStatus> {
