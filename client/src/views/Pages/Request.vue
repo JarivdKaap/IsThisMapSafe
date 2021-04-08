@@ -52,9 +52,13 @@
               </validation-observer>
             </b-card-header>
           </b-card>
+        </b-col>
+        <b-col 
+          lg="5" md="5"
+          v-if="mapStatus"
+        >
           <map-status-card
-            class="mt-3"
-            v-if="mapStatus"
+            class="mt-md-0 mt-sm-3"
             :mapStatus="mapStatus"
           />
         </b-col>

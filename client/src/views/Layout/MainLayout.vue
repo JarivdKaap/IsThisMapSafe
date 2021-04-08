@@ -7,9 +7,10 @@
       class="navbar-horizontal navbar-main navbar-top navbar-dark"
       expand="md"
     >
-      <div slot="brand" class="navbar-wrapper">
+      <div slot="brand" class="navbar-wrapper ml-3">
         <b-navbar-brand to="/">
-          <img src="img/brand/white.png">
+          <img alt="Icon of IsThisMapSafe" style="height: 50px" :src="require('@/assets/images/icons/IsThisMapSafeIcon.png')">
+          <div class="h3 mb-0 text-white text-uppercase d-none d-lg-inline-block">ITMS</div>
         </b-navbar-brand>
       </div>
 
@@ -18,7 +19,7 @@
          <b-row>
            <b-col cols="6" class="collapse-brand">
              <router-link to="/">
-               <img src="img/brand/green.png">
+               <img alt="Icon of IsThisMapSafe" :src="require('@/assets/images/icons/IsThisMapSafeIcon.png')">
              </router-link>
            </b-col>
            <b-col cols="6" class="collapse-close">

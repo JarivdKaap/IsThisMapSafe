@@ -14,7 +14,7 @@ async function startServer() {
 
   // Start up the servers
   const server = app.listen(config.port, () => {
-    Logger.info(`✔  Recipe Service started at port ${config.port}`);
+    Logger.info(`✔  IsThisMapSafe started at port ${config.port}`);
   });
 }
 

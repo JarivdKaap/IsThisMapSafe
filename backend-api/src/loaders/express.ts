@@ -27,8 +27,6 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use('/api', routes());
 
-  app.use(express.static("./src/client-dist"));
-
   app.use((req, res, next) => {
     const err = new Error('Not Found');
     err['status'] = 404;

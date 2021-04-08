@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card h-100">
-      <b-img-lazy class="card-img-top" fluid :src="mapStatus.imageUrl" />
+      <b-img-lazy :alt="'Preview image of ' + mapStatus.name" class="card-img-top" fluid :src="mapStatus.imageUrl" />
       <div class="icon icon-shape text-white rounded-circle shadow"
             style="position: absolute; top: 20px; right: 20px;"
             :class="[`bg-${iconColor}`, {'cursor-pointer': canShowDetails}]"
@@ -42,7 +42,7 @@
         </b-card-text>
       </div>
       <div class="card-footer mt--4">
-        <b-button class="my--2" variant="primary" :href="steamPageUrl" target="_blank">Visit Steam page</b-button>
+        <b-button class="my--2" variant="primary" :href="steamPageUrl" target="_blank" rel="noreferrer">Visit Steam page</b-button>
       </div>
     </div>
   </div>
