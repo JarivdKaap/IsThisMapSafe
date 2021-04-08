@@ -38,7 +38,7 @@ export default class MapValidatorService {
       if (error || stderr) {
         this.logger.debug(`Error while downloading workshop item ${mapStatus.steamid}: %o`, (error || stderr))
         // Remove files again
-        rimraf(config.steamCmdInstallFolder + mapStatus.steamid)
+        rimraf(config.steamCmdInstallFolder + mapStatus.steamid, () => {})
         // Set the status back to queue
         mapStatus.mapSecureStatus = MapSecureStatus.ValidatorQueue;
         await mapStatus.save();
@@ -76,7 +76,7 @@ export default class MapValidatorService {
           }
           await mapStatus.save();
           // Remove files again
-          //rimraf(config.steamCmdInstallFolder + mapStatus.steamid)
+          rimraf(config.steamCmdInstallFolder + mapStatus.steamid, () => {})
           // Start a new map status validation in the queue
           this.startNewValidation();
         });
