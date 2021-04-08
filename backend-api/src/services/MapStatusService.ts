@@ -50,6 +50,19 @@ export default class MapStatusService {
       .select('-validationHash')
   }
 
+  public async getMapsQueue() {
+    const beingValidated = await this.mapStatusModel.findOne({ mapSecureStatus: MapSecureStatus.Validating })
+      .select('-validationHash')
+    if (!beingValidated)
+      return { validating: null, queue: []}
+    
+    const queue = await this.mapStatusModel.find({ mapSecureStatus: MapSecureStatus.ValidatorQueue })
+      .sort( 'statusChangedDate' )
+      .select('-validationHash')
+
+    return { validating: beingValidated, queue: queue}
+  }
+
   public async createMapStatusRequest(steamid): Promise<IMapStatus> {
     const mapStatusExists = await this.getMapStatusBySteamId(steamid)
     if (mapStatusExists != null)

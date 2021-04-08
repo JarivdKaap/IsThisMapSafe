@@ -26,6 +26,21 @@ export default (app: Router) => {
   )
 
   route.get(
+    '/queue',
+    async (req: Request, res: Response, next: NextFunction) => {
+      logger.debug('Calling get queue');
+      try {
+        const mapStatusServiceInstance = Container.get(MapStatusService);
+        const queue = await mapStatusServiceInstance.getMapsQueue();
+        return res.status(200).json(queue);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    }
+  )
+
+  route.get(
     '/:id',
     async (req: Request, res: Response, next: NextFunction) => {
       logger.debug('Calling get mapstatus with id: %d', req.params.id);

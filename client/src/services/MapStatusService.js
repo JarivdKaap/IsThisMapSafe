@@ -16,6 +16,11 @@ export default {
       return response.data;
     });
   },
+  async getMapsQueue(page, search) {
+    return await axios.get('/api/mapstatus/queue').then((response) => {
+      return response.data;
+    });
+  },
   async createMapStatusRequest(steamId) {
     return await axios.post(`/api/mapstatus/${steamId}`).then((response) => {
       return response.data;

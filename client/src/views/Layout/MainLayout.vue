@@ -39,6 +39,10 @@
                <i class="fa fa-envelope"></i>
                <span class="nav-link-inner--text">Request</span>
            </b-nav-item>
+           <b-nav-item class="pt-md-2 pt-lg-0" to="/queue">
+               <i class="fa fa-bars"></i>
+               <span class="nav-link-inner--text">Queue</span>
+           </b-nav-item>
            <b-nav-item class="pt-md-2 pt-lg-0" to="/faq">
                <i class="fa fa-question"></i>
                <span class="nav-link-inner--text">FAQ</span>

@@ -1,6 +1,6 @@
 <template>
   <b-container class="mt--8 pb-5">
-    <b-row cols="6" cols-sm="6" cols-md="6" cols-lg="4">
+    <b-row cols="6" cols-sm="6" cols-md="6" cols-lg="4" class="justify-content-center">
               <b-col
           v-for="mapStatus in mapStatuses"
           :key="mapStatus._id"
@@ -18,7 +18,7 @@
       </b-col>
     </b-row>
     
-    <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
+    <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading" v-if="!disableInfiniteLoad">
       <div slot="no-more"></div>
       <div slot="no-results"></div>
     </infinite-loading>
@@ -37,6 +37,10 @@ export default {
     mapStatuses: {
       type: Array,
       default: () => [],
+    },
+    disableInfiniteLoad: {
+      type: Boolean,
+      default: false,
     }
   },
   methods: {
