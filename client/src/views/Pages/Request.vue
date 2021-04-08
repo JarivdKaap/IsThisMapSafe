@@ -1,14 +1,11 @@
 <template>
   <div>
     <!-- Header -->
-    <div class="header bg-gradient-success py-5 py-lg-6 pt-lg-7">
+    <div class="header bg-gradient-success py-5 py-lg-6 pt-lg-7" style="height: 400px">
       <b-container>
-        <div class="header-body text-center mb-7">
+        <div class="header-body text-center mb-9">
           <b-row class="justify-content-center">
-            <b-col xl="6" lg="7" md="8" class="px-4 pt-md-5 pt-lg-0">
-              <h1 class="text-white">Request A Map!</h1>
-              <p class="text-lead text-white">There's a big chance you are looking for an item we don't have in our database. Give the URL and we'll add it to the queue.</p>
-            </b-col>
+            
           </b-row>
         </div>
       </b-container>
@@ -20,11 +17,27 @@
       </div>
     </div>
 
-    <b-container class="mt--8 pb-5">
+    <b-container class="pb-5" style="margin-top: -300px;">
+      <div class="header-body text-center">
+        <b-row class="justify-content-center">
+          <b-col lg="5" md="6">
+            <div>
+              <h1 class="text-white">Request A Map!</h1>
+              <p class="text-lead text-white">There's a big chance you are looking for an item we don't have in our database. Give the URL and we'll add it to the queue.</p>
+            </div>
+          </b-col>
+          <b-col lg="5" md="6" align-self="center" class="d-none d-sm-none d-md-block">
+            <div>
+              <h1 class="text-white" v-if="!queueData">Loading queue.</h1>
+              <h1 class="text-white" v-if="queueData && queueData.validating">Currently validating:</h1>
+            </div>
+          </b-col>
+        </b-row>
+      </div>
       <b-row class="justify-content-center">
-        <b-col lg="5" md="7">
+        <b-col lg="5" md="6">
           <b-card no-body class="bg-secondary border-0 mb-0">
-            <b-card-header class="bg-transparent pb-5"  >
+            <b-card-header class="bg-transparent"  >
               <div class="text-center mt-2 mb-3">Give the link of the workshop item page.</div>
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
                 <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
@@ -46,24 +59,49 @@
                     <span class="alert-text"><strong>Error!</strong> {{error}}</span>
                   </b-alert>
                   <div class="text-center">
-                    <base-button type="primary" native-type="submit" class="my-4" :disabled="!formValid">Request Item</base-button>
+                    <base-button type="primary" native-type="submit" :disabled="!formValid">Request Item</base-button>
                   </div>
                 </b-form>
               </validation-observer>
             </b-card-header>
           </b-card>
-        </b-col>
-        <b-col 
-          lg="5" md="5"
-          v-if="mapStatus"
-        >
           <map-status-card
-            class="mt-md-0 mt-sm-3"
+            v-if="mapStatus"
+            class="mt-3"
             :mapStatus="mapStatus"
           />
         </b-col>
+        
+        <b-col lg="5" md="6">
+          <div class="header-body text-center d-block d-sm-block d-md-none mt-3">
+            <h1 class="text-white" v-if="!queueData">Loading queue.</h1>
+            <h1 class="text-white" v-if="queueData && queueData.validating">Currently validating:</h1>
+          </div>
+          <h2 class="text-white text-center" v-if="queueData && !queueData.validating">The queue is completely empty and nothing is being validated!</h2>
+          <map-status-card
+            v-if="queueData && queueData.validating"
+            class="mt-md-0 mt-sm-3"
+            :mapStatus="queueData.validating"
+          />
+        </b-col>
       </b-row>
+
+      <div class="header-body text-center mt-4" v-if="queueData && queueData.validating">
+        <b-row class="justify-content-center" v-if="queueData">
+          <b-col xl="6" lg="7" md="8" class="px-4 pt-md-5 pt-lg-0">
+            <h1 class="text-white" v-if="queueData.queue.length > 0">Item {{ queueData.queue.length > 1 ? 's' : '' }} currently in the queue:</h1>
+            <h1 class="text-white" v-else>The queue is empty!</h1>
+          </b-col>
+        </b-row>
+      </div>
     </b-container>
+
+    <map-status-list
+      v-if="queueData"
+      class="pt-7"
+      disable-infinite-load
+      :mapStatuses="queueData.queue"
+    />
   </div>
 </template>
 
@@ -85,6 +123,7 @@ export default {
       urlValid: false,
       validatingCall: false,
       mapStatus: null,
+      queueData: null,
     }
   },
   computed: {
@@ -124,6 +163,13 @@ export default {
         })
     }
   },
+  
+  created() {
+    MapStatusService.getMapsQueue()
+      .then(queueData => {
+        this.queueData = queueData
+      })
+  },
   methods: {
     getSteamIdFromUrl() {
       if (!this.steamUrl.includes('/filedetails/') || !this.steamUrl.includes('id=')) {
@@ -149,9 +195,12 @@ export default {
       }
 
       MapStatusService.createMapStatusRequest(steamId)
-        .then(mapStatus => {
-          this.mapStatus = mapStatus;
+        .then(() => {
           this.successMessage = '<strong>Success!</strong> Added item to the queue!'
+          MapStatusService.getMapsQueue()
+            .then(queueData => {
+              this.queueData = queueData
+            })
           this.validatingCall = false;
         })
         .catch(err => {

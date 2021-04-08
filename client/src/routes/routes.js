@@ -24,11 +24,6 @@ const routes = [
         name: 'faq',
         component: () => import('../views/Pages/Faq.vue')
       },
-      {
-        path: '/queue',
-        name: 'queue',
-        component: () => import('../views/Pages/Queue.vue')
-      },
       /*{
         path: '/login',
         name: 'login',
