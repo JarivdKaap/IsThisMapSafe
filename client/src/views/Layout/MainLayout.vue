@@ -43,32 +43,36 @@
                <i class="fa fa-question"></i>
                <span class="nav-link-inner--text">FAQ</span>
           </b-nav-item>
-          <b-form class="navbar-search form-inline mr-sm-3 navbar-search-dark d-none d-sm-none d-md-block"
-            role="form" @submit.prevent="onSearchSubmit"
-            id="navbar-search-main">
-            <b-form-group class="mb-0">
-              <b-input-group class="input-group-alternative input-group-merge">
-                <b-form-input placeholder="Search" v-model="search" type="text"> </b-form-input>
+          <b-nav-item class="d-none d-sm-none d-md-block">
+            <b-form class="navbar-search form-inline mr-sm-3 navbar-search-dark"
+              role="form" @submit.prevent="onSearchSubmit"
+              id="navbar-search-main">
+              <b-form-group class="mb-0">
+                <b-input-group class="input-group-alternative input-group-merge">
+                  <b-form-input placeholder="Search" v-model="search" type="text"> </b-form-input>
 
-                <div class="input-group-append" @click="onSearchSubmit">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-              </b-input-group>
-            </b-form-group>
-          </b-form>
-          <b-form class="navbar-search form-inline mr-sm-3 navbar-search-light d-block d-sm-block d-md-none mt-2"
-            role="form" @submit.prevent="onSearchSubmit"
-            id="navbar-search-main">
-            <b-form-group class="mb-0">
-              <b-input-group class="input-group-alternative input-group-merge">
-                <b-form-input placeholder="Search" v-model="search" type="text"> </b-form-input>
+                  <div class="input-group-append" @click="onSearchSubmit">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                </b-input-group>
+              </b-form-group>
+            </b-form>
+          </b-nav-item>
+          <b-nav-item class="d-block d-sm-block d-md-none">
+            <b-form class="navbar-search form-inline mr-sm-3 navbar-search-light mt-2"
+              role="form" @submit.prevent="onSearchSubmit"
+              id="navbar-search-main">
+              <b-form-group class="mb-0">
+                <b-input-group class="input-group-alternative input-group-merge">
+                  <b-form-input placeholder="Search" v-model="search" type="text"> </b-form-input>
 
-                <div class="input-group-append" @click="onSearchSubmit">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-              </b-input-group>
-            </b-form-group>
-          </b-form>
+                  <div class="input-group-append" @click="onSearchSubmit">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                </b-input-group>
+              </b-form-group>
+            </b-form>
+          </b-nav-item>
        </b-navbar-nav>
      </template>
     </base-nav>
@@ -87,7 +91,7 @@
         <b-row align-v="center" class="justify-content-xl-between">
           <b-col xl="6">
             <div class="copyright text-center text-xl-left text-muted">
-              © {{year}} <a href="https://www.jarivdkaap.com" class="font-weight-bold ml-1" target="_blank">Jari van der Kaap</a>
+              © {{year}} <a href="https://www.jarivdkaap.com" rel="noreferrer" class="font-weight-bold ml-1" target="_blank">Jari van der Kaap</a>
             </div>
           </b-col>
         </b-row>

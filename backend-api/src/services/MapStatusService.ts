@@ -78,7 +78,7 @@ export default class MapStatusService {
     })
 
     // Start the validating process
-    this.mapValidator.validateMap(mapStatus);
+    this.mapValidator.addMapToValidationQueue(mapStatus);
 
     return mapStatus
   }
