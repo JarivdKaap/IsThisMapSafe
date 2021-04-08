@@ -137,7 +137,13 @@ export default {
           id: 6,
           categoryId: 2,
           question: 'Can I 100% trust these results?',
-          ans: "No, we do our best to make this as watertight as possible but as always there might still be some issues. If you find something malicious, please contact us so we can see manually review this. <br><b>We are not liable for any damages because of a false negative.</b>"
+          ans: "No, we do our best to make this as watertight as possible but as always there might still be some issues. If you find something malicious, please contact us so we can manually review this. <br><b>We are not liable for any damages because of a false negative.</b>"
+        },
+        {
+          id: 9,
+          categoryId: 2,
+          question: 'Has development of this site ended?',
+          ans: "No, we continue to add features that we see fit. You can also request features by contacting us. You can see what we're working on our <a href='https://trello.com/b/P44TRUI7/isthismapsafe' target='_blank'>Trello board</a>"
         },
         {
           id: 7,

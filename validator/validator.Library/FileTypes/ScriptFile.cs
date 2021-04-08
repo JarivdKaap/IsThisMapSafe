@@ -76,7 +76,7 @@ namespace FastScanner
         /// <summary>
         /// Analyses given byte code from a Lua file.
         /// </summary>
-        internal static StatusCode Analyse(byte[] fileData, string fileName)
+        internal static StatusCode Analyse(string fileName, byte[] fileData)
         {
             // This is a fairly basic method of reading through all the integer hashes of a *SC file to check for function calls, but it should be adequate for finding functions
             // GSC aligns its hashes so we can do this...

@@ -52,9 +52,13 @@ namespace validator.Library
                 File.Delete(fastFile + ".output");
             }
 
+            StatusCode workshopFolderFilesStatus = WorkshopFolderFiles.Analyse(folderPath);
+            if (workshopFolderFilesStatus > statusLevel)
+                statusLevel = workshopFolderFilesStatus;
+
             AlertMessage[] messages = AmberWarnings
                 .Distinct().Select(w => new AlertMessage() { messsageStatus = MessageStatus.Warning, message = w})
-                .Concat(RedWarnings.Distinct().Select(w => new AlertMessage() { messsageStatus = MessageStatus.Warning, message = w}).ToList()).ToArray();
+                .Concat(RedWarnings.Distinct().Select(w => new AlertMessage() { messsageStatus = MessageStatus.Alert, message = w}).ToList()).ToArray();
             
             return new Tuple<StatusCode, AlertMessage[]>(statusLevel, messages);
         }

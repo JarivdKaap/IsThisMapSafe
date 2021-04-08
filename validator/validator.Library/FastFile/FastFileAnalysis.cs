@@ -37,19 +37,9 @@ namespace FastScanner
         /// </summary>
         internal static Dictionary<string, Func<string, byte[], StatusCode>> FileProcessors = new Dictionary<string, Func<string, byte[], StatusCode>>
         {
-            { ".lua", (string fileName, byte[] fileData) =>
-            {
-                //LuaFile.Analyse(fileName, fileData);
-                return StatusCode.Safe;
-            } },
-            { ".gsc", (string fileName, byte[] fileData) =>
-            {
-                return ScriptFile.Analyse(fileData, fileName);
-            } },
-            { ".csc", (string fileName, byte[] fileData) =>
-            {
-                return ScriptFile.Analyse(fileData, fileName);
-            } },
+            { ".lua", LuaFile.Analyse },
+            { ".gsc", ScriptFile.Analyse },
+            { ".csc", ScriptFile.Analyse },
         };
 
         /// <summary>
