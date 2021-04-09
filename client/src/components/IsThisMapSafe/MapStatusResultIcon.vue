@@ -5,7 +5,7 @@
     >
       <div class="icon icon-shape text-white rounded-circle shadow"
             :style="{ position: 'absolute', top: `${topPosition}px`, right: '20px' }"
-            :class="[`bg-${iconColor}`, {'cursor-pointer': canShowDetails}]"
+            :class="[`bg-${iconColor(mapStatus.mapSecureStatus)}`, {'cursor-pointer': canShowDetails}]"
             v-b-tooltip.hover :title="tooltipText"
             >
         <i :class="icon"></i>
@@ -14,6 +14,14 @@
             :style="{position: 'absolute', height: '20px', width: '20px', top: `${topPosition - 5}px`, right: '15px',}"
             >
         <i class="fa fa-plus"></i>
+      </div>
+      <div class="icon icon-shape text-white rounded-circle shadow"
+        :style="{ position: 'absolute', top: `${topPosition + 55}px`, right: '20px' }"
+        :class="[`bg-${iconColor(mapStatus.modReviewStatus)}`, {'cursor-pointer': canShowDetails}]"
+        v-b-tooltip.hover :title="tooltipModText"
+        v-if="mapStatus.modReviewStatus"
+      >
+        <i class="fa fa-user"></i>
       </div>
     </div>
     <b-modal v-if="canShowDetails" :id="'modal-' + mapStatus._id" size="lg" :title="mapStatus.name + ' - Details'" hide-footer>
@@ -69,29 +77,29 @@ export default {
           return 'fa fa-question'
       }
     },
-    iconColor() {
-      switch(parseInt(this.mapStatus.mapSecureStatus)) {
-        case 0:
-          return 'gradient-gray'
-        case 1:
-          return 'gradient-gray'
-        case 2:
-          return 'gradient-gray'
-        case 3:
-          return 'gradient-green'
-        case 4:
-          return 'gradient-orange'
-        case 5:
-          return 'gradient-red'
-        default:
-          return 'gradient-gray'
-      }
-    },
     canShowDetails() {
       return this.mapStatus.modNotes || this.mapStatus.statusMessages && this.mapStatus.statusMessages.length > 0;
     },
     tooltipText() {
       return this.tooltipStatusText + (this.canShowDetails ? ' Click for details.' : '')
+    },
+    tooltipModText() {
+      let text = '';
+      switch(parseInt(this.mapStatus.modReviewStatus)) {
+        case 3:
+          text = 'A moderator determined this workshop item is safe.'
+          break;
+        case 4:
+          text = 'A moderator determined this workshop item has some user-specific code that is suspicious.'
+          break;
+        case 5:
+          text = 'A moderator determined this workshop item uses code that is malicious and you should not play this.'
+          break;
+        default:
+          text = 'Unknown Status.'
+          break;
+      }
+      return text + (this.canShowDetails ? ' Click for details.' : '')
     },
     tooltipStatusText() {
       switch(parseInt(this.mapStatus.mapSecureStatus)) {
@@ -123,6 +131,24 @@ export default {
           return { icon: 'fa fa-exclamation', variant: 'danger' }
         default:
           return { icon: 'fa fa-question', variant: 'info' }
+      }
+    },
+    iconColor(status) {
+      switch(parseInt(status)) {
+        case 0:
+          return 'gradient-gray'
+        case 1:
+          return 'gradient-gray'
+        case 2:
+          return 'gradient-gray'
+        case 3:
+          return 'gradient-green'
+        case 4:
+          return 'gradient-orange'
+        case 5:
+          return 'gradient-red'
+        default:
+          return 'gradient-gray'
       }
     },
   }

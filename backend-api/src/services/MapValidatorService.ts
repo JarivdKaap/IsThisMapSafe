@@ -32,6 +32,7 @@ export default class MapValidatorService {
     else
       mapStatus.mapSecureStatus = MapSecureStatus.Validating;
     mapStatus.statusMessages = [];
+    mapStatus.modReviewStatus = null;
     mapStatus.statusChangedDate = new Date();
     await mapStatus.save()
 

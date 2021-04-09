@@ -27,6 +27,11 @@ const MapStatusSchema = new Schema({
     default: MapSecureStatus.Validating,
   },
 
+  modReviewStatus: {
+    type: String,
+    enum: MapSecureStatus,
+  },
+
   statusMessages: [
     {
       status: {
@@ -53,6 +58,7 @@ interface IMapStatusSchema extends Document {
   steamid: number;
   imageUrl: string;
   mapSecureStatus: MapSecureStatus;
+  modReviewStatus: MapSecureStatus;
   statusChangedDate: Date;
   statusMessages: {
     status: MessageStatus,
