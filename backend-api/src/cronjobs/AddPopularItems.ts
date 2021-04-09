@@ -7,6 +7,4 @@ export default () => {
     const mapStatusService = Container.get(MapStatusService)
     mapStatusService.addPopularItems()
   });
-  const mapStatusService = Container.get(MapStatusService)
-  mapStatusService.addPopularItems()
 }
