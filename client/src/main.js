@@ -26,7 +26,9 @@ import { io } from "socket.io-client";
 // plugin setup
 Vue.use(DashboardPlugin);
 
-const socket = io(process.env.VUE_APP_SOCKETIO_HOST_ORIGIN);
+const socket = io(process.env.VUE_APP_SOCKETIO_HOST_ORIGIN, {
+  path: '/socket-io'
+});
 
 Vue.use(VueSocketIOExt, socket);
 

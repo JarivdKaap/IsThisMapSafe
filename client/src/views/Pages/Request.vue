@@ -165,19 +165,18 @@ export default {
   },
   created() {
     this.fetchQueue();
-    this.$socket.$subscribe('refresh-queue', () => {
-      this.fetchQueue();
-    });
   },
-  beforeDestroy () {
-    this.$socket.$unsubscribe('refresh-queue');
+  mounted() {
+    this.$socket.client.on('refresh-queue', this.fetchQueue);
+  },
+  beforeDestroy() {
+    this.$socket.client.off('refresh-queue', this.fetchQueue);
   },
   methods: {
     fetchQueue() {
       MapStatusService.getMapsQueue()
         .then(queueData => {
           this.queueData = queueData
-          
         })
     },
     getSteamIdFromUrl() {
