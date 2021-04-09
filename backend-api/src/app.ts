@@ -18,6 +18,7 @@ async function startServer() {
     Logger.info(`✔  IsThisMapSafe started at port ${config.port}`);
   });
   SocketIoLoader({server});
+  await require('./loaders').lateLoaders({ expressApp: app });
 }
 
 startServer();

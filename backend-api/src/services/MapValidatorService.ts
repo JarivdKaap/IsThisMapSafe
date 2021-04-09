@@ -7,17 +7,20 @@ import winston from 'winston';
 import MapSecureStatus from '../models/MapSecureStatus';
 import config from '../config';
 import { Server } from 'socket.io';
+import SteamAPI from 'steam-api-ts';
 
 @Service()
 export default class MapValidatorService {
   private mapStatusModel: IMapStatusModel;
   private logger: winston.Logger;
   private socketio: Server;
+  private steamApi : SteamAPI;
 
   constructor() {
     this.mapStatusModel = Container.get('mapStatusModel');
     this.logger = Container.get('logger');
     this.socketio = Container.get('socket.io');
+    this.steamApi = new SteamAPI(config.steamApiKey);
   }
 
   public async addMapToValidationQueue(mapStatus: IMapStatus): Promise<void> {
@@ -99,5 +102,17 @@ export default class MapValidatorService {
     if (mapStatusQueue.length == 0)
       return;
     this.addMapToValidationQueue(mapStatusQueue[0])
+  }
+
+  public async watchForUpdates(): Promise<void> {
+    const mapStatuses = await this.mapStatusModel.find({ mapSecureStatus: { $nin: [MapSecureStatus.Validating, MapSecureStatus.ValidatorQueue]} })
+
+    for (let i = 0; i < mapStatuses.length; i++) {
+      const workshopData = await this.steamApi.getPublishedFileDetails(mapStatuses[i].steamid);
+      if (workshopData.time_updated * 1000 > mapStatuses[i].statusChangedDate.getTime()) {
+        this.logger.debug(`Starting update for item ${mapStatuses[i].steamid}`)
+        await this.addMapToValidationQueue(mapStatuses[i])
+      }
+    }
   }
 }
