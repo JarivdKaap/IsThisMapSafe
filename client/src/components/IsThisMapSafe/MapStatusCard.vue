@@ -4,17 +4,16 @@
       <b-img-lazy :alt="'Preview image of ' + mapStatus.name" class="card-img-top" fluid :src="mapStatus.imageUrl" />
       <div
         v-b-modal="'modal-' + mapStatus._id"
-        v-b-tooltip.hover :title="tooltipText"
       >
         <div class="icon icon-shape text-white rounded-circle shadow"
               style="position: absolute; top: 20px; right: 20px;"
               :class="[`bg-${iconColor}`, {'cursor-pointer': canShowDetails}]"
+              v-b-tooltip.hover :title="tooltipText"
               >
           <i :class="icon"></i>
         </div>
         <div v-if="canShowDetails" class="icon icon-shape text-white rounded-circle shadow bg-gradient-gray cursor-pointer"
               style="position: absolute; height: 20px; width: 20px; top: 15px; right: 15px;"
-              
               >
           <i class="fa fa-plus"></i>
         </div>
