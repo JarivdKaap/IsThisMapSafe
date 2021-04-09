@@ -109,6 +109,7 @@
 import MapStatusList from '../../components/IsThisMapSafe/MapStatusList.vue'
 import MapStatusService from '../../services/MapStatusService'
 import MapStatusCard from '../../components/IsThisMapSafe/MapStatusCard.vue'
+import MapValidatedToast from '../../components/IsThisMapSafe/MapValidatedToast.vue'
 
 export default {
   components: {
@@ -192,6 +193,26 @@ export default {
 
       return steamId;
     },
+    showValidatedNotification(mapStatus) {
+      this.$socket.client.off(`item-validated-${mapStatus.steamid}`, this.showValidatedNotification);
+
+      const h = this.$createElement
+
+      const toastBody = h(
+        MapValidatedToast,
+        {
+          props: {
+            mapStatus,
+          }
+        },
+      )
+
+      this.$bvToast.toast([toastBody], {
+        id: `validated-toast-${mapStatus.steamid}`,
+        title: `Workshop item validated!`,
+        autoHideDelay: 10000,
+      })
+    },
     onSubmit() {
       this.validatingCall = true;
 
@@ -209,6 +230,7 @@ export default {
             .then(queueData => {
               this.queueData = queueData
             })
+          this.$socket.client.on(`item-validated-${steamId}`, this.showValidatedNotification);
           this.validatingCall = false;
         })
         .catch(err => {

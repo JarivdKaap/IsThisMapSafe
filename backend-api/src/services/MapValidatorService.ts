@@ -81,9 +81,12 @@ export default class MapValidatorService {
           }
           await mapStatus.save();
           // Remove files again
-          rimraf(config.steamCmdInstallFolder + mapStatus.steamid, () => {})
+          if (config.validation.deleteItemFiles)
+            rimraf(config.steamCmdInstallFolder + mapStatus.steamid, () => {})
           // Refresh the queue for all connected clients
           this.socketio.emit('refresh-queue');
+          this.socketio.emit(`item-validated-${mapStatus.steamid}`, await this.mapStatusModel.findOne({ steamid: mapStatus.steamid })
+            .select('-validationHash'));
           // Start a new map status validation in the queue
           this.startNewValidation();
         });
