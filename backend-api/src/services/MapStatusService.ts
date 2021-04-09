@@ -7,6 +7,7 @@ import SteamApi from 'steam-api-ts'
 import config from '../config';
 import MapValidatorService from './MapValidatorService';
 import MessageStatus from '../models/MessageStatus';
+import axios from 'axios';
 
 @Service()
 export default class MapStatusService {
@@ -108,5 +109,20 @@ export default class MapStatusService {
     });
     mapStatus.validationHash = null;
     await mapStatus.save();
+  }
+
+  public async addPopularItems(): Promise<void> {
+    const stuff = await axios.get(`https://api.steampowered.com/IPublishedFileService/QueryFiles/v1/?key=${config.steamApiKey}&query_type=3&page=1&cursor=*&numperpage=15&creator_appid=455130&appid=311210&ids_only=1`);
+
+    if (!stuff.data.response || !stuff.data.response.publishedfiledetails)
+      return;
+
+    const items = stuff.data.response.publishedfiledetails;
+    console.log(items);
+    for (let i = 0; i < items.length; i++) {
+      try {
+        await this.createMapStatusRequest(items[i].publishedfileid)
+      } catch {}
+    }
   }
 }

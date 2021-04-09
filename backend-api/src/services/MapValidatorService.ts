@@ -45,6 +45,14 @@ export default class MapValidatorService {
     this.validateMap(mapStatus)
   }
 
+  public async restoreAlreadyValidatingMap(): Promise<void> {
+    const mapStatus = await this.mapStatusModel.findOne({ mapSecureStatus: MapSecureStatus.Validating })
+    if (!mapStatus)
+      return;
+
+    this.validateMap(mapStatus)
+  }
+
   public async validateMap(mapStatus: IMapStatus): Promise<void> {
     this.logger.debug(`Starting download of workshop item ${mapStatus.steamid}`)
     exec(`steamcmd +login anonymous +@nCSClientRateLimitKbps 300000 +workshop_download_item 311210 ${mapStatus.steamid} validate +quit`, async (error, stdout, stderr) => {

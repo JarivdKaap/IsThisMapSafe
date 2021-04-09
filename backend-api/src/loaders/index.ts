@@ -4,6 +4,8 @@ import mongooseLoader from './mongoose';
 import dependencyInjectorLoader from './dependencyInjector';
 import expressLoader from './express';
 import cronjobs from '../cronjobs'
+import Container from 'typedi';
+import MapValidatorService from '../services/MapValidatorService';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -20,6 +22,9 @@ export default async ({ expressApp }) => {
 const lateLoaders = async ({ expressApp }) => {
   cronjobs.forEach(cj => cj())
   Logger.info('ℹ Cron jobs loaded');
+
+  const mapValidatorService = Container.get(MapValidatorService);
+  await mapValidatorService.restoreAlreadyValidatingMap();
 }
 
 export {
