@@ -2,6 +2,7 @@ import express from 'express';
 import "reflect-metadata";
 
 import config from './config';
+import SocketIoLoader from './loaders/socketio';
 
 import Logger from './loaders/logger';
 
@@ -16,6 +17,7 @@ async function startServer() {
   const server = app.listen(config.port, () => {
     Logger.info(`✔  IsThisMapSafe started at port ${config.port}`);
   });
+  SocketIoLoader({server});
 }
 
 startServer();

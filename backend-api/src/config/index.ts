@@ -19,4 +19,7 @@ export default {
   steamApiKey: process.env.STEAM_API_KEY,
   steamCmdInstallFolder: process.env.STEAMCMD_INSTALL_FOLDER,
   validatorExePath: process.env.VALIDATOR_EXE_PATH,
+  socketio: {
+    clientOrigin: process.env.SOCKETIO_CLIENT_ORIGIN,
+  },
 };

@@ -6,15 +6,18 @@ import { exec, spawn } from 'child_process'
 import winston from 'winston';
 import MapSecureStatus from '../models/MapSecureStatus';
 import config from '../config';
+import { Server } from 'socket.io';
 
 @Service()
 export default class MapValidatorService {
   private mapStatusModel: IMapStatusModel;
   private logger: winston.Logger;
+  private socketio: Server;
 
   constructor() {
     this.mapStatusModel = Container.get('mapStatusModel');
     this.logger = Container.get('logger');
+    this.socketio = Container.get('socket.io');
   }
 
   public async addMapToValidationQueue(mapStatus: IMapStatus): Promise<void> {
@@ -29,6 +32,9 @@ export default class MapValidatorService {
     mapStatus.statusChangedDate = new Date();
     await mapStatus.save()
 
+    // Refresh the queue for all connected clients
+    this.socketio.emit('refresh-queue');
+
     // Don't do anything else if it's added to the queue
     if (addToQueue)
       return;
@@ -40,7 +46,7 @@ export default class MapValidatorService {
     this.logger.debug(`Starting download of workshop item ${mapStatus.steamid}`)
     exec(`steamcmd +login anonymous +@nCSClientRateLimitKbps 300000 +workshop_download_item 311210 ${mapStatus.steamid} validate +quit`, async (error, stdout, stderr) => {
       if (error || stderr) {
-        this.logger.debug(`Error while downloading workshop item ${mapStatus.steamid}: %o`, (error || stderr))
+        this.logger.error(`Error while downloading workshop item ${mapStatus.steamid}: %o`, (error || stderr))
         // Start the validation again
         this.validateMap(mapStatus)
         return;
@@ -76,6 +82,8 @@ export default class MapValidatorService {
           await mapStatus.save();
           // Remove files again
           rimraf(config.steamCmdInstallFolder + mapStatus.steamid, () => {})
+          // Refresh the queue for all connected clients
+          this.socketio.emit('refresh-queue');
           // Start a new map status validation in the queue
           this.startNewValidation();
         });

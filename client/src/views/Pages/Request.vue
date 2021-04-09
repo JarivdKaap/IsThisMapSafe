@@ -163,14 +163,23 @@ export default {
         })
     }
   },
-  
   created() {
-    MapStatusService.getMapsQueue()
-      .then(queueData => {
-        this.queueData = queueData
-      })
+    this.fetchQueue();
+    this.$socket.$subscribe('refresh-queue', () => {
+      this.fetchQueue();
+    });
+  },
+  beforeDestroy () {
+    this.$socket.$unsubscribe('refresh-queue');
   },
   methods: {
+    fetchQueue() {
+      MapStatusService.getMapsQueue()
+        .then(queueData => {
+          this.queueData = queueData
+          
+        })
+    },
     getSteamIdFromUrl() {
       if (!this.steamUrl.includes('/filedetails/') || !this.steamUrl.includes('id=')) {
         return null;
