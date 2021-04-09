@@ -20,7 +20,6 @@ const MapStatusSchema = new Schema({
   },
 
   imageUrl: String,
-  notes: String,
 
   mapSecureStatus: {
     type: String,
