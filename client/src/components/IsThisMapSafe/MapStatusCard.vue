@@ -21,9 +21,10 @@
       <b-modal v-if="canShowDetails" :id="'modal-' + mapStatus._id" size="lg" :title="mapStatus.name + ' - Details'" hide-footer>
         <div v-if="mapStatus.modNotes" class="mt--5">
           <h3>Notes from moderator:</h3>
-          <p>{{ mapStatus.modNotes }}</p>
+          <p v-html="mapStatus.modNotes"></p>
         </div>
         <div :class="{'mt--4': !mapStatus.modNotes}">
+          <h3>Error messages</h3>
           <b-alert
             v-for="message in mapStatus.statusMessages"
             :key="message._id"
