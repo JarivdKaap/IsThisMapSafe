@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="itms-default-layout">
     <base-nav
       v-model="showMenu"
       :transparent="true"
@@ -127,29 +127,29 @@
     </base-nav>
 
     <div class="main-content">
+      <footer style="position: absolute; bottom: 0; bottom:0; width:100%; height:60px; text-align:center" class="py-5" id="footer-main">
+        <b-container fluid class="text-center mt-3" >
+          <b-row align-v="center" class="justify-content-xl-center">
+            <b-col xl="6">
+              <div class="copyright text-center text-xl-left text-muted">
+                © {{ year }}
+                <a
+                  href="https://www.jarivdkaap.com"
+                  rel="noreferrer"
+                  class="font-weight-bold ml-1"
+                  target="_blank"
+                  >Jari van der Kaap</a
+                >
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </footer>
       <zoom-center-transition :duration="pageTransitionDuration" mode="out-in">
         <Nuxt />
       </zoom-center-transition>
     </div>
 
-    <footer class="py-5" id="footer-main">
-      <b-container>
-        <b-row align-v="center" class="justify-content-xl-between">
-          <b-col xl="6">
-            <div class="copyright text-center text-xl-left text-muted">
-              © {{ year }}
-              <a
-                href="https://www.jarivdkaap.com"
-                rel="noreferrer"
-                class="font-weight-bold ml-1"
-                target="_blank"
-                >Jari van der Kaap</a
-              >
-            </div>
-          </b-col>
-        </b-row>
-      </b-container>
-    </footer>
   </div>
 </template>
 
@@ -203,12 +203,12 @@ export default Vue.extend({
     },
     onSearchSubmit() {
       if (
-        (this.$route.name == 'search' &&
+        (this.$route.name == 'search-value' &&
           this.$route.params.value === this.search) ||
         !this.search
       )
         return
-      this.$router.push({ name: 'search', params: { value: this.search } })
+      this.$router.push({ name: 'search-value', params: { value: this.search } })
     },
   },
   beforeDestroy() {

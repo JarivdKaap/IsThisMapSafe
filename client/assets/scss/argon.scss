@@ -68,4 +68,11 @@ $ignore-warning: true;
 
 @import "custom/vendors";
 
+html,body, #__nuxt, #__layout, .itms-default-layout{
+  height:100%!important;
+  width: 100%!important;
+}
 
+.itms-default-layout {
+  position: inherit;
+}

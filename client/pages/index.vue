@@ -32,29 +32,32 @@
       </div>
     </div>
 
-    <!--<map-status-list :mapStatuses="mapStatuses" @load-page="loadPage" />-->
+    <map-status-list :mapStatuses="mapStatuses" @load-page="loadPage" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import MapStatusService from '~/services/MapStatusService'
 
 export default Vue.extend({
   layout: 'default',
-  data() {
-    return {
-      page: 1,
-      mapStatuses: []
-    }
+  async asyncData({ $axios }) {
+    return $axios.$get(`/api/mapstatuses?page=0&size=9&validated=${true}`)
+      .then(response => ({
+        page: 1,
+        mapStatuses: response.data
+      }))
   },
   methods: {
     loadPage(state: any) {
-      this.$axios.get(`/api/mapstatus?page=${this.page}&validated=${true}`)
-        .then((data: any) => {
-          if (data.length) {
+      // @ts-ignore
+      this.$axios.$get(`/api/mapstatuses?page=${this.page}&size=9&validated=${true}`)
+        .then((response: any) => {
+          if (response.data.length) {
+            // @ts-ignore
             this.page++;
-            this.mapStatuses.push(...data);
+            // @ts-ignore
+            this.mapStatuses.push(...response.data);
             state.loaded();
           } else {
             state.complete();

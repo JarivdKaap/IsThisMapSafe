@@ -1,9 +1,9 @@
 <template>
   <b-container class="mt--8 pb-5">
     <b-row cols="6" cols-sm="6" cols-md="6" cols-lg="4" class="justify-content-center">
-              <b-col
+      <b-col
           v-for="mapStatus in mapStatuses"
-          :key="mapStatus._id"
+          :key="mapStatus.id"
                 col
                 no-gutters
                 class="mb-2"
@@ -18,20 +18,41 @@
       </b-col>
     </b-row>
     
-    <no-ssr>
+    <client-only>
       <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading" v-if="!disableInfiniteLoad">
         <div slot="no-more"></div>
         <div slot="no-results"></div>
       </infinite-loading>
-    </no-ssr>
+    </client-only>
   </b-container>
 </template>
 
 
 <script lang="ts">
+import InfiniteLoading from 'vue-infinite-loading';
+import MapStatusCard from './MapStatusCard.vue';
 import Vue from 'vue'
 
 export default Vue.extend({
+  components: {
+    InfiniteLoading,
+    MapStatusCard,
+  },
+  props: {
+    mapStatuses: {
+      type: Array,
+      default: () => [],
+    },
+    disableInfiniteLoad: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  methods: {
+    infiniteHandler($state: any) {
+      this.$emit('load-page', $state)
+    }
+  }
 })
 </script>
 

@@ -41,25 +41,31 @@
               <div class="text-center mt-2 mb-3">Give the link of the workshop item page.</div>
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
                 <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
-                  <base-input alternative
-                    class="mb-3"
-                    name="Steam link"
-                    :rules="{required: true}"
-                    prepend-icon="fa fa-link"
-                    placeholder="Steam link"
-                    :disabled="validatingCall"
-                    v-model.lazy="steamUrl">
-                  </base-input>
+                  <b-input-group size="md" class="mb-3">
+                    <b-input-group-prepend is-text>
+                      <font-awesome-icon icon="link"/>
+                    </b-input-group-prepend>
+                    <b-form-input alternative
+                      name="Steam link"
+                      :rules="{required: true}"
+                      prepend-icon="fa fa-link"
+                      placeholder="Steam link"
+                      :disabled="validatingCall"
+                      v-model.lazy="steamUrl">
+                    </b-form-input>
+                   </b-input-group>
                   <b-alert show variant="success" v-if="successMessage">
                     <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                     <span class="alert-text" v-html="successMessage"></span>
                   </b-alert>
-                  <b-alert show dismissible variant="danger" v-if="error">
+                  <b-alert show variant="danger" v-if="error">
                     <span class="alert-icon"><i class="fa fa-exclamation"></i></span>
                     <span class="alert-text"><strong>Error!</strong> {{error}}</span>
                   </b-alert>
-                  <div class="text-center">
-                    <base-button type="primary" native-type="submit" :disabled="!formValid">Request Item</base-button>
+                  <div class="text-center w-100">
+                    <b-button variant="primary" class="w-100" type="submit" :disabled="!formValid">
+                      Request Item
+                    </b-button>
                   </div>
                 </b-form>
               </validation-observer>
@@ -89,7 +95,7 @@
       <div class="header-body text-center mt-4" v-if="queueData && queueData.validating">
         <b-row class="justify-content-center" v-if="queueData">
           <b-col xl="6" lg="7" md="8" class="px-4 pt-md-5 pt-lg-0">
-            <h1 class="text-white" v-if="queueData.queue.length > 0">Item {{ queueData.queue.length > 1 ? 's' : '' }} currently in the queue:</h1>
+            <h1 class="text-white" v-if="queueData.queue.length > 0">Item{{ queueData.queue.length > 1 ? 's' : '' }} currently in the queue:</h1>
             <h1 class="text-white" v-else>The queue is empty!</h1>
           </b-col>
         </b-row>
@@ -107,8 +113,113 @@
 
 
 <script lang="ts">
-import Vue from 'vue'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+import { Component, Vue, Watch } from "nuxt-property-decorator";
 
-export default Vue.extend({
+@Component({
+  layout: 'default',
+  components: {
+    ValidationObserver: ValidationObserver,
+    ValidationProvider: ValidationProvider
+  }
 })
+export default class Home extends Vue {
+  private steamUrl: string = '';
+  private successMessage: string = '';
+  private error: string = '';
+  private urlValid: boolean = false;
+  private validatingCall: boolean = false;
+  private mapStatus: object|null = null;
+  private queueData: object|null = null;
+
+  // @ts-ignore
+  async asyncData ( { $axios } ) {
+    const queueData = await $axios.$get(`/api/mapstatuses/queue`)
+    return {
+      steamUrl: '',
+      successMessage: '',
+      error: '',
+      urlValid: false,
+      validatingCall: false,
+      mapStatus: null,
+      queueData: queueData,
+    }
+  }
+
+  get formValid() {
+    if (!this.steamUrl || !this.urlValid)
+      return false
+    return true;
+  }
+
+   @Watch('steamUrl')
+   onSteamUrlChanged() {
+      this.urlValid = false;
+      this.mapStatus = null;
+      this.validatingCall = true;
+      this.successMessage = '';
+      this.error = '';
+
+      const steamId = this.getSteamIdFromUrl()
+
+      if (!steamId) {
+        this.validatingCall = false;
+        return;
+      }
+
+      this.$axios.$get(`/api/mapstatuses/steamid/${steamId}`)
+        .then((mapStatus: any) => {
+          if (mapStatus) {
+            this.successMessage = '<strong>Success!</strong> This item already exists!'
+            this.mapStatus = mapStatus;
+          }
+          else
+            this.urlValid = true;
+          this.validatingCall = false;
+        })
+        .catch((err: any) => {
+          this.validatingCall = false;
+        })
+    }
+
+    getSteamIdFromUrl() {
+      if (!this.steamUrl.includes('/filedetails/') || !this.steamUrl.includes('id=')) {
+        return null;
+      }
+
+      const idIndex = this.steamUrl.indexOf('id=') + 3;
+      let steamId = this.steamUrl.substring(idIndex);
+      if (steamId.includes('&')) {
+        steamId = steamId.substring(0, steamId.indexOf('&'))
+      }
+
+      return steamId;
+    }
+
+    onSubmit() {
+      this.validatingCall = true;
+
+      const steamId = this.getSteamIdFromUrl()
+
+      if (!steamId) {
+        this.validatingCall = false;
+        return;
+      }
+
+      this.$axios.$post('/api/mapstatuses', { steamid: steamId })
+        .then(() => {
+          this.successMessage = '<strong>Success!</strong> Added item to the queue!'
+          this.$axios.$get(`/api/mapstatuses/queue`)
+            .then(queueData => {
+              this.queueData = queueData
+            })
+          //this.$socket.client.on(`item-validated-${steamId}`, this.showValidatedNotification);
+          this.validatingCall = false;
+        })
+        .catch((err: any) => {
+          this.error = err.response.data.message;
+          this.validatingCall = false;
+        })
+    }
+}
 </script>

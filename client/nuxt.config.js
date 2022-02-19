@@ -35,7 +35,10 @@ export default {
   css: ['~/assets/scss/argon.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~plugins/vue-infinite-scroll.js', ssr: false }],
+  plugins: [
+    { src: '~plugins/vue-infinite-scroll.js', ssr: false },
+    '~/plugins/vee-validate.ts',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -49,7 +52,23 @@ export default {
 
   fontawesome: {
     icons: {
-      solid: ['faSearch', 'faHome', 'faEnvelope', 'faQuestion'],
+      solid: [
+        'faSearch',
+        'faHome',
+        'faEnvelope',
+        'faBars',
+        'faSpinner',
+        'faUser',
+        'faBug',
+        'faExclamation',
+        'faQuestion',
+        'faPlus',
+        'faCheck',
+        'faLink',
+      ],
+      regular: [
+        'faCircleDown'
+      ]
     },
   },
 
@@ -61,10 +80,18 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8083',
+    browserBaseURL: 'http://192.168.1.171:8083',
+  },
+
+  bootstrapVue: {
+    icons: false
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -75,6 +102,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vee-validate/dist/rules'],
     loaders: {
       scss: {
         sassOptions: {
@@ -82,5 +110,8 @@ export default {
         },
       },
     },
+  },
+  server: {
+    host: '0.0.0.0',
   },
 }
